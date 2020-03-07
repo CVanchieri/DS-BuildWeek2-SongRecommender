@@ -73,17 +73,22 @@ def create_app():
         return json.dumps(tupledicts)
 
         # /search query
-    @app.route('/query/<query_string>')
-    def query(query_string):
+    @app.route('/query', methods=['POST'])
+    @app.route('/query/<query_string>', methods=['GET'])
+
+    def query(query_string=None, message=''):
+        query_string = query_string or request.values['query_string']
         res = query_spotify(urllib.parse.unquote(query_string))
         return jsonify(res)
 
 
-    @app.route('/recommend/<track_id>')
-    def recommend(track_id):
+    @app.route('/recommend', methods=['POST'])
+    @app.route('/recommend/<track_id>', methods=['GET'])
+    def recommend(track_id=None, message=''):
+        track_id_string = track_id_string or request.values['track_id']
         """Using this to test prediction functions."""
         # connect to the database
-        rec_engine.connect(psycopg2.connect(config('ELEPHANTSQL_DATABASE_URI')))
+        rec_engine.connect(psycopg2.connect("postgres://hbxxvjdj:WKiU7AFZ_NQlwT1D0EQWStM1EwUqOg4K@rajje.db.elephantsql.com:5432/hbxxvjdj"))
         # get the base song vector for the track to be recommended
         vector = get_base_song_vector(track_id)
         # make dict out of base vector

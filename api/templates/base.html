@@ -1,12 +1,38 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Spotify App - {{ title }}</title>
-</head>
-<body>
-    <h1>Add Spotify info Here</h1> 
-    <p1> Heres the data </p1>
-</body>
+
+<html>
+        <head>
+                <title>
+                  Spotify Suggester - {{title}}
+                </title>
+
+        </head>
+        <body>
+                <font color="green"><h1>Spotify Song Suggester!
+                <img src="https://campaigns.scdn.co/images/spotify.png" alt="spotify logo" height="100" width="300"> 
+                </h1>
+
+                {% block content %}
+                
+                <h3>
+                <font color="grey"><font size=1>    
+                 Enter a song title or a genre.
+               </h3>
+                <form action="/query" method="post">
+                        <input type="text" name="query_string" placeholder="Song Title or Genre">
+                        <input type="submit" name="query spotify">
+
+                
+                <h3>
+                <font color="grey"><font size=1>    
+                 Enter a song track ID.
+                 <font color="grey"><font size=0.5>
+                 hint: you can search the song title which will give you the song tack ID.
+               </h3>
+                <form action="/recommend" method="post">
+                        <input type="text" name="track_id" placeholder="Track ID">
+                        <input type="submit" name="recommendations">
+
+               {% endblock %}
+        </body>
 </html>
