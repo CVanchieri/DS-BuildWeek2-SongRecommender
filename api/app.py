@@ -22,7 +22,7 @@ from os import getenv
 # Make app factory
 def create_app():
     app = Flask(__name__)
-    #app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///spotify_tracks.sqlite3'
+   #app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///spotify_tracks.sqlite3'
     app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
     app.config['ENV'] = config('ENV')
     rec_engine = Recommendations()
@@ -77,15 +77,14 @@ def create_app():
     @app.route('/query/<query_string>', methods=['GET'])
 
     def query(query_string=None, message=''):
-        query_string = query_string or request.values['query_string']
+        query_string = request.values['query_string']
         res = query_spotify(urllib.parse.unquote(query_string))
         return jsonify(res)
-
 
     @app.route('/recommend', methods=['POST'])
     @app.route('/recommend/<track_id>', methods=['GET'])
     def recommend(track_id=None, message=''):
-        track_id_string = track_id_string or request.values['track_id']
+        track_id = request.values['track_id']
         """Using this to test prediction functions."""
         # connect to the database
         rec_engine.connect(psycopg2.connect("postgres://hbxxvjdj:WKiU7AFZ_NQlwT1D0EQWStM1EwUqOg4K@rajje.db.elephantsql.com:5432/hbxxvjdj"))
